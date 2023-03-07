@@ -1,45 +1,31 @@
-import {Axios, AxiosResponse, AxiosRequestConfig} from 'axios';
+import fetch from "node-fetch";
 
-const baseUrl = 'https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos';
-
-const axios = new Axios();
-
-function getPhotos(sol:number, page:number = 1, camera?:string, url:string = baseUrl): Promise<AxiosResponse> {
-    const config: AxiosRequestConfig = {
-        params: {
-            sol: sol,
-            api_key: 'DEMO_KEY',
-            //camera: camera,
-            //page: page
-        }
-    };
-
-    return axios.get(url, config);
+const baseUrl = "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos";
+/*
+async function savePhotosFromResponse(response: {
+    total_photos: number;
+    cameras: string[];
+}) {
+    console.log(
+        `Total photos: ${
+            response.total_photos
+        },\nFrom cameras: ${JSON.stringify(response.cameras)}`
+    );
 }
+*/
 
-async function savePhotosFromResponse(response_promise: Promise<AxiosResponse>) {
-    const response = await response_promise;
-    console.log(`Total photos: ${response.data.total_photos},\nFrom cameras: ${JSON.stringify(response.data.cameras)}`);
-}
-
-
-async function getPhotos2() {
-    const apiKey = "DEMO_KEY";
-    const apiUrl = "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos";
-    const config: AxiosRequestConfig = {
-      params: {
-        sol: 1000, // Martian sol (day) on which the photos were taken
-        camera: "fhaz", // Camera name
-        api_key: apiKey,
-      },
-    };
+async function getPhotos2(key:string, sol: number, page: number, camera: string) {
     try {
-      const response = await axios.get(apiUrl, config);
-      console.log(response.data);
+        const response = await fetch(
+            `${baseUrl}?sol=${sol}&api_key=${key}&page=${page}&camera=${camera}`
+        );
+        const data = await response.json();
+        console.log(data);
     } catch (error) {
-      console.error(error);
+        console.error(error);
     }
 }
-getPhotos2();
+const res = getPhotos2("DEMO_KEY", 1000, 1, "FHAZ");
+res.then((data) => console.log(data));
 
 //savePhotosFromResponse(getPhotos(1000, 1));
