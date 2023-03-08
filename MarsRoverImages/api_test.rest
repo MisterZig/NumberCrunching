@@ -1,1 +1,1 @@
-GET api.nasa.gov
+GET https://api.nasa.gov/mars-photos/api/v1/rovers/perseverance/photos?api_key=DEMO_KEY&sol=100&camera=MCZ_RIGHT
