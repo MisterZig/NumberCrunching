@@ -42,7 +42,7 @@ if __name__ == "__main__":
     else:
         sol_start, sol_end = int(sys.argv[1]), int(sys.argv[2])
 
-    for sol in range(130, 200):
+    for sol in range(sol_start, sol_end + 1):
         photos = getPhotos(URL, sol, API_KEY, "FRONT_HAZCAM_RIGHT_A")
 
         print(photos)
