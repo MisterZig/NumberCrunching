@@ -2,3 +2,4 @@ MarsRoverImages/output
 api_key`
 .vscode
 GravitySim/build
+*.out
